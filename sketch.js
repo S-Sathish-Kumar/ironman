@@ -22,6 +22,8 @@ function preload() {
   diamondImg = loadImage("images/diamond.png");
   spikeImg = loadImage("images/spikes.png");
   restartImg = loadImage("images/restart.png");
+  jumpSound = loadSound("jump.wav");
+  diamondSound = loadSound("reward.wav")
 }
 //The Setup Function is used to execute a Block of Code only once.
 function setup() {
@@ -58,15 +60,19 @@ function draw() {
     //To control the Ironman in the Direction of our Choice.
     if (keyDown("up")) {
       ironMan.velocityY = -10;
+      jumpSound.play();
     }
     if (keyDown("down")) {
       ironMan.velocityY = 5;
+      jumpSound.play();
     }
     if (keyDown("left")) {
       ironMan.velocityX = -5;
+      jumpSound.play();
     }
     if (keyDown("right")) {
       ironMan.velocityX = 5;
+      jumpSound.play();
     }
     //To prevent the Ironamn from vanishing in the edges.
     ironMan.bounceOff(edges[0]);
@@ -89,6 +95,7 @@ function draw() {
       if (temp.isTouching(ironMan)) {
         temp.destroy();
         score++;
+        diamondSound.play();
       }
     }
     //Calling the function to Generate Spikes.
