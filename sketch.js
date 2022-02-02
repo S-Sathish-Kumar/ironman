@@ -22,8 +22,13 @@ function preload() {
   diamondImg = loadImage("images/diamond.png");
   spikeImg = loadImage("images/spikes.png");
   restartImg = loadImage("images/restart.png");
-  jumpSound = loadSound("jump.wav");
-  diamondSound = loadSound("reward.wav")
+  jumpSound = loadSound("sounds/fireRelease.wav");
+  diamondSound = loadSound("sounds/firereward.wav");
+  startSound = loadSound("sounds/start.wav");
+  spikeSound = loadSound("sounds/stonefell.wav");
+  stoneSound = loadSound("sounds/fireHit.wav");
+  restartSound = loadSound("sounds/buttonClick.wav");
+  endSound = loadSound("sounds/fireEnemy.wav");
 }
 //The Setup Function is used to execute a Block of Code only once.
 function setup() {
@@ -85,6 +90,7 @@ function draw() {
       var temp = stoneGroup.get(i);
       if (temp.isTouching(ironMan)) {
         ironMan.collide(temp);
+        stoneSound.play();
       }
     }
     //Calling the function to Generate Diamonds.
@@ -103,7 +109,8 @@ function draw() {
     //To reduce the score by 5 when the Ironman touches the Spikes.
     for (var i = 0; i < spikeGroup.length; i++) {
       var temp = spikeGroup.get(i);
-      if (temp.isTouching(ironMan)) {
+      if (temp.isTouching(ironMan)) {4
+        spikeSound.play();
         ironMan.x = 300;
         ironMan.y = 300;
         score--;
@@ -118,6 +125,7 @@ function draw() {
     if (score <= -10) {
       gameState = "END";
       restart.visible = true;
+      endSound.play();
     }
   } //end of play state.
   //This is the code for the end state.
@@ -133,6 +141,7 @@ function draw() {
     spikeGroup.setLifetimeEach(-1);
     if (mousePressedOver(restart)) {
       restartGame();
+      restartSound.play();
       console.log("restart");
     }
   }
